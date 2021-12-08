@@ -1,0 +1,141 @@
+.container-cadastro{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: 20px auto;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.container-cadastro h1{
+    margin: 20px auto;
+}
+
+input[type='file']{
+    display: none;
+}
+
+.container-box-preview{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #dddfe2;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.container-box-preview img{
+    width: 150px;
+    
+    
+}
+.container-box-preview label{
+    text-decoration: underline;
+    color: #4473ed;
+    margin: 20px 0 10px;
+    cursor: pointer;
+}
+.container-box-preview span{
+    margin-right: 20%;
+    font-size: small;
+}
+
+.container-cadastro form {
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+}
+
+.container-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.container-box div{
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.container-box .email {
+    width: 59%;
+}
+.container-box .telefone {
+    width: 37%;
+}
+.container-box .numero{
+    width: 18%;
+}
+.container-box .bairro{
+    width: 78%;
+}
+.container-box .uf {
+    width: 18%;
+    
+}
+.container-box .cidade {
+    width: 78%;
+    margin-bottom: 10px;
+}
+
+.container-box .cidade select {
+    margin: 0px;
+}
+
+.container-box .estado_civil {
+    width: 60%;
+}
+
+.container-box div input {
+    width: 100%;
+}
+
+.container-cadastro button{
+    margin: 20px 0px;
+    background-color: #4473ed;
+    color: #FFF;
+}
+
+@media only screen and (max-width: 768px) {
+    .container-cadastro{
+        width: 100%;
+        margin: 0px;
+    }
+
+    .container-cadastro form{
+        width: 100%;
+    }
+
+    .container-box form label {
+        font-size: 14px;
+    }
+
+    .container-cadastro input {
+        font: 400 16px Roboto, sans-serif ;
+        margin: 0px 0px 20px;
+    }
+
+    .container-box .email{
+        width: 54%;
+    }
+    .container-box .telefone {
+        width: 44%;
+    }
+
+    .container-box-preview {
+        width: 100%;
+    }
+
+    .container-box-preview span{
+        margin-right: 5px;
+    }
+
+}
