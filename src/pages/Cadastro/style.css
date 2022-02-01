@@ -59,6 +59,19 @@ input[type='file']{
     
 }
 
+.container-box .container-box-sexo {
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    
+}
+
+.container-box .container-box-cpf {
+    width: 36%;
+}
+
 .container-box div{
     display: flex;
     flex-direction: column;
@@ -121,6 +134,7 @@ input[type='file']{
     .container-cadastro input {
         font: 400 16px Roboto, sans-serif ;
         margin: 0px 0px 20px;
+        text-transform: capitalize;
     }
 
     .container-box .email{
@@ -136,6 +150,10 @@ input[type='file']{
 
     .container-box-preview span{
         margin-right: 5px;
+    }
+
+    .container-box .container-box-sexo {
+        margin-bottom: 10px;   
     }
 
 }

@@ -10,6 +10,7 @@ export default function Cadastro(){
     const [nome, setNome] = useState('');
     const [cpf, setCpf] = useState('');
     const [rg, setRg] = useState('');
+    const [sexo, setSexo] = useState('');
     const [filiacao, setFiliacao] = useState('');
     const [data_nascimento, setData_nascimento] = useState('');
     const [data_batismo, setData_batismo] = useState('');
@@ -37,6 +38,7 @@ export default function Cadastro(){
             nome,
             cpf, 
             rg,
+            sexo,
             filiacao,
             data_nascimento,
             data_batismo,
@@ -53,7 +55,7 @@ export default function Cadastro(){
          } 
 
          try {
-            if (nome === '' || cpf === '' || rg === '' || filiacao === '' || 
+            if (nome === '' || cpf === '' || rg === '' || sexo === '' || filiacao === '' || 
                 data_nascimento === '' || data_batismo === '' || email === '' || 
                 telefone === '' || endereco === '' || numero === '' || bairro === '' ||
                 cidade === '' || uf === '' || congregacao === '' || funcao === '' || imagem === '') {
@@ -84,6 +86,7 @@ export default function Cadastro(){
             setNome('')
             setCpf('')
             setRg('')
+            setSexo('')
             setFiliacao('')
             setData_nascimento('')
             setData_batismo('')
@@ -132,7 +135,7 @@ export default function Cadastro(){
                 />
                 
                 <div className='container-box'>
-                    <div>
+                    <div className='container-box-cpf'>
                         <label htmlFor='cpf' >CPF</label>
                         <InputMask 
                             mask='999.999.999-99'  
@@ -143,7 +146,7 @@ export default function Cadastro(){
                         />
                     </div>
 
-                    <div>
+                    <div className='container-box-cpf'>
                         <label htmlFor='rg' >RG</label>
                         <input 
                             id='rg' 
@@ -153,6 +156,20 @@ export default function Cadastro(){
                             onChange={e => setRg(e.target.value)} 
                             required
                         />
+                    </div>
+                    
+                    <div className='container-box-sexo'>
+                        <label htmlFor='sexo' >Sexo</label>
+                        <select 
+                            id='sexo' 
+                            value={sexo} 
+                            onChange={e => setSexo(e.target.value)} 
+                            required
+                        >
+                            <option value=''></option>
+                            <option value='Masculino'>Masculino</option>
+                            <option value='Feminino'>Feminino</option>
+                        </select>
                     </div>
                 </div>
 
@@ -301,7 +318,7 @@ export default function Cadastro(){
                             <option value="Rua dos Professores">Rua dos Professores</option>
                             <option value="Vassouras">Vassouras</option>
                             <option value="Recanto">Recanto</option>
-                            <option value="Alto dos Pereiras">Ato dos Pereiras</option>
+                            <option value="Alto dos Pereiras">Alto dos Pereiras</option>
                             <option value="São João do Amanari">São João do Amanari</option>
                         </optgroup>
                         <optgroup label='Setor III' >
