@@ -7,6 +7,7 @@ import api from "../../services/api";
 import userlogin from '../../assets/user-login.png'
 
 export default function Cadastro(){
+
     const [nome, setNome] = useState('');
     const [cpf, setCpf] = useState('');
     const [rg, setRg] = useState('');
@@ -25,11 +26,12 @@ export default function Cadastro(){
     const [funcao, setFuncao] = useState('');
     const [estado_civil, setEstado_civil] = useState('')
     const [imagem, setImagem] = useState('')
+    const [isSet, setIsSet] = useState(false)
 
 
     async function handleSubmit(e){
         e.preventDefault();
-
+        
         const dataImage = new FormData();
 
         dataImage.append('file', imagem)
@@ -61,12 +63,21 @@ export default function Cadastro(){
                 cidade === '' || uf === '' || congregacao === '' || funcao === '' || imagem === '') {
                 
                     alert('Todos os campos são necessários');
-                
-            }else{
-                
+                    return
+            }
+            else 
+            
+            if(imagem.size > (2 * 1024 * 1024)){
+                alert("Tamanho da foto maior que o permitido")
+
+                return
+            } else {
+
+                setIsSet(true);
+
                 await api.post('user', data)
                 .then(response => {
-                    console.log(response.status)
+                    
                     if (response.status === 204) {
 
                         api.get(`user/specific/${cpf}`)
@@ -104,6 +115,8 @@ export default function Cadastro(){
          } catch (error) {
              console.log(error.response)
          }
+
+         setIsSet(false)
     }
 
     return(
@@ -118,7 +131,7 @@ export default function Cadastro(){
                         type='file' 
                         id='file' 
                         name='file' 
-                        accept='image/*'  
+                        accept='image/*'
                         onChange={ e => setImagem(e.target.files[0]) } 
                         required
                     />
@@ -368,7 +381,7 @@ export default function Cadastro(){
                 </div>
                 
 
-                <button type='submit'>Salvar</button>
+                <button type='submit' disabled={isSet}  >Salvar</button>
             </form>
         </div>
     )
