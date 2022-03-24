@@ -353,11 +353,12 @@ export default function Cadastro(){
                         required
                     >
                         <option value=''></option>
-                        <option value='Congregado'>Congregado</option>
                         <option value='Membro'>Membro</option>
                         <option value='Auxiliar'>Auxiliar</option>
                         <option value='Diácono'>Diácono</option>
                         <option value='Presbítero'>Presbítero</option>
+                        <option value='Supervisor de Congregação'>Supervisor de Congregação</option>
+                        <option value='Evangelista'>Evangelista</option>
                         <option value='Pastor'>Pastor</option>
                     </select>
                 </div>
