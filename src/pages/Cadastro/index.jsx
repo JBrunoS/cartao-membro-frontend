@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import InputMask from 'react-input-mask'
 
 
@@ -6,7 +6,7 @@ import './style.css'
 import api from "../../services/api";
 import userlogin from '../../assets/user-login.png'
 
-export default function Cadastro(){
+export default function Cadastro() {
 
     const [nome, setNome] = useState('');
     const [cpf, setCpf] = useState('');
@@ -29,16 +29,16 @@ export default function Cadastro(){
     const [isSet, setIsSet] = useState(false)
 
 
-    async function handleSubmit(e){
+    async function handleSubmit(e) {
         e.preventDefault();
-        
+
         const dataImage = new FormData();
 
         dataImage.append('file', imagem)
 
         const data = {
             nome,
-            cpf, 
+            cpf,
             rg,
             sexo,
             filiacao,
@@ -47,52 +47,59 @@ export default function Cadastro(){
             email,
             telefone,
             endereco,
-            numero, 
+            numero,
             bairro,
             cidade,
             uf,
             congregacao,
             funcao,
             estado_civil,
-         } 
+        }
 
-         try {
-            if (nome === '' || cpf === '' || rg === '' || sexo === '' || filiacao === '' || 
-                data_nascimento === '' || data_batismo === '' || email === '' || 
+        try {
+            if (nome === '' || cpf === '' || rg === '' || sexo === '' || filiacao === '' ||
+                data_nascimento === '' || data_batismo === '' || email === '' ||
                 telefone === '' || endereco === '' || numero === '' || bairro === '' ||
                 cidade === '' || uf === '' || congregacao === '' || funcao === '' || imagem === '') {
-                
-                    alert('Todos os campos são necessários');
-                    return
-            }
-            else 
-            
-            if(imagem.size > (2 * 1024 * 1024)){
-                alert("Tamanho da foto maior que o permitido")
 
+                alert('Todos os campos são necessários');
                 return
+            }
+            else
+
+                if (imagem.size > (2 * 1024 * 1024)) {
+                    alert("Tamanho da foto maior que o permitido")
+
+                    return
+                }
+                if (imagem.type !== 'image/jpeg' && imagem.type !== 'image/jpg' && imagem.type !== 'image/png') {
+                alert("Formato de foto não permitido. Formatos aceitos: image.jpeg, image.jpg, image.png");
+
+                return;
+
             } else {
 
                 setIsSet(true);
 
                 await api.post('user', data)
-                .then(response => {
-                    
-                    if (response.status === 204) {
+                    .then(response => {
 
-                        api.get(`user/specific/${cpf}`)
-                        .then(response => {
-                            api.post(`user/${response.data.id}`, dataImage)
-                        })
+                        if (response.status === 204) {
 
-                        alert("Cadastro Realizado com sucesso!");
+                            api.get(`user/specific/${cpf}`)
+                                .then(response => {
+                                    api.post(`user/${response.data.id}`, dataImage)
+                                })
 
-                    
-                    }else{
-                        
-                        alert('Já existe alguém cadastrado com esse CPF e/ou RG');    
-                    }
-                })
+                            alert("Cadastro Realizado com sucesso!");
+
+
+                        } else {
+
+                            alert('Já existe alguém cadastrado com esse CPF e/ou RG');
+                            return;
+                        }
+                    })
             }
             setNome('')
             setCpf('')
@@ -112,46 +119,46 @@ export default function Cadastro(){
             setImagem('')
             setEstado_civil('')
 
-         } catch (error) {
-             console.log(error.response)
-         }
+        } catch (error) {
+            console.log(error.response)
+        }
 
-         setIsSet(false)
+        setIsSet(false)
     }
 
-    return(
+    return (
         <div className='container-cadastro' >
             <h1>Carteira de Membro</h1>
-            
+
             <form onSubmit={handleSubmit}>
                 <div className='container-box-preview'>
-                    { imagem ? <img src={URL.createObjectURL(imagem)} alt='imagem' /> : <img src={userlogin} alt='imagem' /> }
+                    {imagem ? <img src={URL.createObjectURL(imagem)} alt='imagem' /> : <img src={userlogin} alt='imagem' />}
                     <label htmlFor='file' >Escolher foto</label>
-                    <input 
-                        type='file' 
-                        id='file' 
-                        name='file' 
+                    <input
+                        type='file'
+                        id='file'
+                        name='file'
                         accept='image/*'
-                        onChange={ e => setImagem(e.target.files[0]) } 
+                        onChange={e => setImagem(e.target.files[0])}
                         required
                     />
                 </div>
-                
+
                 <label htmlFor='nome' >Nome Completo</label>
-                <input 
-                    id='nome' 
-                    type='text' 
-                    placeholder='Nome Completo' 
-                    value={nome} 
-                    onChange={e => setNome(e.target.value)} 
+                <input
+                    id='nome'
+                    type='text'
+                    placeholder='Nome Completo'
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
                     required
                 />
-                
+
                 <div className='container-box'>
                     <div className='container-box-cpf'>
                         <label htmlFor='cpf' >CPF</label>
-                        <InputMask 
-                            mask='999.999.999-99'  
+                        <InputMask
+                            mask='999.999.999-99'
                             placeholder='000.000.000-00'
                             value={cpf}
                             onChange={e => setCpf(e.target.value)}
@@ -161,22 +168,22 @@ export default function Cadastro(){
 
                     <div className='container-box-cpf'>
                         <label htmlFor='rg' >RG</label>
-                        <input 
-                            id='rg' 
-                            type='phone' 
-                            placeholder='0000000000-0' 
-                            value={rg} 
-                            onChange={e => setRg(e.target.value)} 
+                        <input
+                            id='rg'
+                            type='phone'
+                            placeholder='0000000000-0'
+                            value={rg}
+                            onChange={e => setRg(e.target.value)}
                             required
                         />
                     </div>
-                    
+
                     <div className='container-box-sexo'>
                         <label htmlFor='sexo' >Sexo</label>
-                        <select 
-                            id='sexo' 
-                            value={sexo} 
-                            onChange={e => setSexo(e.target.value)} 
+                        <select
+                            id='sexo'
+                            value={sexo}
+                            onChange={e => setSexo(e.target.value)}
                             required
                         >
                             <option value=''></option>
@@ -187,33 +194,33 @@ export default function Cadastro(){
                 </div>
 
                 <label htmlFor='mae' >Nome da Mãe</label>
-                <input 
-                    id='mae' 
-                    type='text' 
-                    placeholder='Nome da mãe completo' 
-                    value={filiacao} 
-                    onChange={e => setFiliacao(e.target.value)} 
+                <input
+                    id='mae'
+                    type='text'
+                    placeholder='Nome da mãe completo'
+                    value={filiacao}
+                    onChange={e => setFiliacao(e.target.value)}
                     required
                 />
-                
+
                 <div className='container-box'>
                     <div>
                         <label htmlFor='nascimento' >Data de Nascimento</label>
-                        <input 
-                            id='nascimento' 
-                            type='date' 
-                            value={data_nascimento} 
-                            onChange={e => setData_nascimento(e.target.value)} 
+                        <input
+                            id='nascimento'
+                            type='date'
+                            value={data_nascimento}
+                            onChange={e => setData_nascimento(e.target.value)}
                             required
                         />
                     </div>
                     <div>
                         <label htmlFor="batismo">Data de Batismo</label>
-                        <input 
-                            id='batismo' 
-                            type='date' 
-                            value={data_batismo} 
-                            onChange={e => setData_batismo(e.target.value)} 
+                        <input
+                            id='batismo'
+                            type='date'
+                            value={data_batismo}
+                            onChange={e => setData_batismo(e.target.value)}
                             required
                         />
                     </div>
@@ -222,34 +229,34 @@ export default function Cadastro(){
                 <div className='container-box' >
                     <div className='email'>
                         <label htmlFor='email' >Email</label>
-                        <input 
-                            id='email' 
-                            type='email' 
-                            placeholder='seunome@provedor.com' 
-                            value={email} 
+                        <input
+                            id='email'
+                            type='email'
+                            placeholder='seunome@provedor.com'
+                            value={email}
                             onChange={e => setEmail(e.target.value)}
                             required
                         />
                     </div>
                     <div className='telefone'>
                         <label htmlFor='telefone' >Telefone</label>
-                        <InputMask 
-                            mask='(99) 99999-9999' 
-                            id='telefone' 
-                            type='tel' 
-                            placeholder='(85) 98888-0000' 
-                            value={telefone} 
-                            onChange={e => setTelefone(e.target.value)} 
+                        <InputMask
+                            mask='(99) 99999-9999'
+                            id='telefone'
+                            type='tel'
+                            placeholder='(85) 98888-0000'
+                            value={telefone}
+                            onChange={e => setTelefone(e.target.value)}
                             required
                         />
                     </div>
                 </div>
 
                 <label htmlFor='endereco' >Endereço</label>
-                <input 
-                    id='endereco' 
-                    type='text' 
-                    placeholder='Ex: Rua Alameda dos Anjos' 
+                <input
+                    id='endereco'
+                    type='text'
+                    placeholder='Ex: Rua Alameda dos Anjos'
                     value={endereco}
                     onChange={e => setEndereco(e.target.value)}
                     required
@@ -258,10 +265,10 @@ export default function Cadastro(){
                 <div className='container-box' >
                     <div className='numero'>
                         <label htmlFor='numero' >Número</label>
-                        <input 
-                            id='numero' 
-                            type='number' 
-                            placeholder='102' 
+                        <input
+                            id='numero'
+                            type='number'
+                            placeholder='102'
                             min='0'
                             value={numero}
                             onChange={e => setNumero(e.target.value)}
@@ -270,10 +277,10 @@ export default function Cadastro(){
                     </div>
                     <div className='bairro'>
                         <label htmlFor='bairro' >Bairro</label>
-                        <input 
-                            id='bairro' 
-                            type='text' 
-                            placeholder='Ex: Areais, Altos, etc' 
+                        <input
+                            id='bairro'
+                            type='text'
+                            placeholder='Ex: Areais, Altos, etc'
                             value={bairro}
                             onChange={e => setBairro(e.target.value)}
                             required
@@ -284,7 +291,7 @@ export default function Cadastro(){
                 <div className='container-box'>
                     <div className='cidade'>
                         <label htmlFor='cidade' >Cidade</label>
-                        <select 
+                        <select
                             id='cidade'
                             value={cidade}
                             onChange={e => setCidade(e.target.value)}
@@ -308,7 +315,7 @@ export default function Cadastro(){
 
                 <div className='container-box'>
                     <label htmlFor="congregacao">Congregação:</label>
-                    <select 
+                    <select
                         id='congregacao'
                         value={congregacao}
                         onChange={e => setCongregacao(e.target.value)}
@@ -340,13 +347,13 @@ export default function Cadastro(){
                             <option value="Riacho da Palha">Riacho da Palha</option>
                             <option value="Monte Hebrom">Monte Hebrom</option>
                         </optgroup>
-                        
+
                     </select>
                 </div>
 
                 <div className='container-box'>
                     <label htmlFor="funcao">Função:</label>
-                    <select 
+                    <select
                         id='funcao'
                         value={funcao}
                         onChange={e => setFuncao(e.target.value)}
@@ -365,7 +372,7 @@ export default function Cadastro(){
 
                 <div className='container-box'>
                     <label htmlFor="estado_civil">Estado Civil:</label>
-                    <select 
+                    <select
                         id='estado_civil'
                         value={estado_civil}
                         onChange={e => setEstado_civil(e.target.value)}
@@ -380,7 +387,7 @@ export default function Cadastro(){
                         <option value='Viúvo'>Viúvo</option>
                     </select>
                 </div>
-                
+
 
                 <button type='submit' disabled={isSet}  >Salvar</button>
             </form>
